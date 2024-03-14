@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: main-cd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:Efiop97/FoodistGitOps.git
+    targetRevision: HEAD
+    path: "."
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

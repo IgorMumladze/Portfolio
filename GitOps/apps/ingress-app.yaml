@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:Efiop97/FoodistGitOps.git
+    path: "apps/ingress-controller"
+    targetRevision: HEAD
+    helm:
+      values: |
+        installCRDs: true
+        controller:
+          metrics:
+            enabled: true
+          podAnnotations:
+            prometheus.io/scrape: "true"
+            prometheus.io/port: "10254"
+          extraArgs:
+            enable-ssl-passthrough: "true"
+          ingressClassResource:
+            name: nginx
+            enabled: true
+            default: true
+          ingressClass: nginx
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ingress-nginx
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

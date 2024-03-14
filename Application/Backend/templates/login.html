@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"> <!-- Include your CSS file here -->
+</head>
+<body>
+    <div class="wrapper">
+        <form class="login" id="login-form" method="POST" action="/login">
+            <p class="title">Log in</p>
+            <input type="email" id="email" name="email" placeholder="Email" autofocus required>
+            <i class="fa fa-user"></i>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <i class="fa fa-key"></i>
+            <a href="#">Forgot your password?</a>
+            <button type="submit">
+                <i class="spinner"></i>
+                <span class="state">Log in</span>
+            </button>
+        </form>
+        <p>Don't have an account? <a href="/register">Register here</a></p>
+    </div>
+
+    <!-- Include your JavaScript -->
+    <script>
+        var working = false;
+        $('#login-form').on('submit', function(e) {
+            e.preventDefault();
+            if (working) return;
+            working = true;
+            var $this = $(this),
+                $state = $this.find('button > .state');
+            $this.addClass('loading');
+            $state.html('Authenticating');
+            
+            // Simulate a successful login (replace this with your actual authentication logic)
+            setTimeout(function() {
+                $this.addClass('ok');
+                $state.html('Welcome back!');
+                setTimeout(function() {
+                    $state.html('Log in');
+                    $this.removeClass('ok loading');
+                    working = false;
+                    
+                    // Redirect to the root URL upon successful login
+                    window.location.href = "/"; // Redirect to the root URL
+                }, 4000);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

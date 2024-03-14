@@ -1,0 +1,9 @@
+dependencies:
+- name: fluent-bit
+  repository: https://fluent.github.io/helm-charts
+  version: 0.43.0
+- name: elasticsearch
+  repository: https://charts.bitnami.com/bitnami
+  version: 19.16.3
+digest: sha256:9918e9e7c77e7a2aa74b706b1dbfc8b81e6a66ca8720bfa13818df8db69c9eb1
+generated: "2024-02-04T12:56:22.50911+02:00"

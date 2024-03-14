@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Flask App - Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <!-- Add a custom CSS class for the profile picture button -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile-button.css') }}">
+    <!-- Add a custom CSS class for the recipe cards -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/recipes.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <section class="main-content">
+        <form action="/recipes" method="GET" class="mb-4 custom-search-form">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Search for recipes...">
+            </div>
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+            <a href="/recipes/submit" class="btn btn-submit-recipe">Submit Recipe</a>
+        </form>
+
+        {% include 'recipe_cards.html' %}
+        
+    </section>
+</body>
+</html>

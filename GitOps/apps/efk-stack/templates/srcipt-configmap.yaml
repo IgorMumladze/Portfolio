@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-data
+data:
+  curl-script.sh: |
+    #!/bin/sh
+
+    # Wait for Kibana to be available & healthy
+    function wait_for_kibana {
+        echo ">>>>>>>>>>>>>>>> Testing connection to Kibana... <<<<<<<<<<<<<<<<"
+        until curl -fsSLI -o /dev/null http://${KIBANA_HOST}:${KIBANA_PORT}/api/status; do
+          echo ">>>>>>>>>> Kibana not ready, waiting... <<<<<<<<<<<<<"
+          sleep 5
+        done
+        echo ">>>>>>>>>>>>>>>> Kibana up and running... <<<<<<<<<<<<<<<<"
+    }
+
+    # Import objects
+    function import_objects {
+        echo ">>>>>>>>>>>>>>>> Importing objects... <<<<<<<<<<<<<<<<"
+
+        # Execute curl and direct output and errors to files
+        curl -X POST "http://${KIBANA_HOST}:${KIBANA_PORT}/api/saved_objects/_import" \
+            -H "Content-Type: multipart/form-data" \
+            -H "kbn-xsrf: true" \
+            -F "file=@/kibana/file.ndjson" \
+            -o /tmp/curl-response.txt -w "%{http_code}" \
+            2>/tmp/curl-error.log > /tmp/curl-http-code.txt
+
+        # Read HTTP status code from the file
+        HTTP_CODE=$(cat /tmp/curl-http-code.txt)
+        OUTPUT=$(cat /tmp/curl-response.txt)
+
+        # Check if the operation was successful by looking for "success":true in the response body
+        SUCCESS=$(echo ${OUTPUT} | grep -o '"success":true' | wc -l)
+
+        if [[ ${SUCCESS} -eq 1 ]]; then
+          printf "\n>>>>>>>>>>>>>> Imported objects successfully! <<<<<<<<<<<<<<<<<<<<<<<\n"
+        else
+          printf "\n>>>>>>>>>>>>>> Failure while importing objects! <<<<<<<<<<<<<<<<<<<<<\n"
+          echo "HTTP Status Code: ${HTTP_CODE}"
+          echo "Response Body:"
+          cat /tmp/curl-response.txt
+          echo "Curl Error (if any):"
+          cat /tmp/curl-error.log
+          exit 1
+        fi
+    }
+
+    echo ">>>>>>>>>>>>>>>> Running ${0}... <<<<<<<<<<<<<<<<"
+    wait_for_kibana
+    import_objects
+
+
+  file.ndjson: |
+    {"attributes":{"fieldAttrs":"{\"levelname\":{\"count\":2}}","fieldFormatMap":"{}","fields":"[]","name":"foodist","runtimeFieldMap":"{}","sourceFilters":"[]","timeFieldName":"@timestamp","title":"food*","typeMeta":"{}"},"coreMigrationVersion":"8.8.0","created_at":"2024-02-05T16:39:26.134Z","id":"f2e1f66d-b627-4ce3-9ec0-2112bf6088f9","managed":false,"references":[],"type":"index-pattern","typeMigrationVersion":"8.0.0","updated_at":"2024-02-05T16:40:51.904Z","version":"WzEyLDRd"}
+    {"attributes":{"description":"","kibanaSavedObjectMeta":{"searchSourceJSON":"{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"},"optionsJSON":"{\"useMargins\":true,\"syncColors\":false,\"syncCursor\":true,\"syncTooltips\":false,\"hidePanelTitles\":false}","panelsJSON":"[{\"type\":\"lens\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"071ef051-0dba-4044-9dd7-7e9010fdea11\"},\"panelIndex\":\"071ef051-0dba-4044-9dd7-7e9010fdea11\",\"embeddableConfig\":{\"attributes\":{\"title\":\"StatusCodes\",\"description\":\"\",\"visualizationType\":\"lnsPie\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"f2e1f66d-b627-4ce3-9ec0-2112bf6088f9\",\"name\":\"indexpattern-datasource-layer-345cafcc-50d0-4474-8a5b-8b9224396e8e\"}],\"state\":{\"visualization\":{\"shape\":\"pie\",\"layers\":[{\"layerId\":\"345cafcc-50d0-4474-8a5b-8b9224396e8e\",\"primaryGroups\":[\"74672a00-f2b6-4dc8-ba6f-419057c2aca1\"],\"metrics\":[\"4182bb63-1438-4770-ae34-ad3d2e9edae2\"],\"numberDisplay\":\"percent\",\"categoryDisplay\":\"default\",\"legendDisplay\":\"default\",\"nestedLegend\":false,\"layerType\":\"data\"}]},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"345cafcc-50d0-4474-8a5b-8b9224396e8e\":{\"columns\":{\"4182bb63-1438-4770-ae34-ad3d2e9edae2\":{\"label\":\"Count of records\",\"dataType\":\"number\",\"operationType\":\"count\",\"isBucketed\":false,\"scale\":\"ratio\",\"sourceField\":\"___records___\",\"params\":{\"emptyAsNull\":true}},\"74672a00-f2b6-4dc8-ba6f-419057c2aca1\":{\"label\":\"Top 100 values of response_status\",\"dataType\":\"number\",\"operationType\":\"terms\",\"scale\":\"ordinal\",\"sourceField\":\"response_status\",\"isBucketed\":true,\"params\":{\"size\":100,\"orderBy\":{\"type\":\"column\",\"columnId\":\"4182bb63-1438-4770-ae34-ad3d2e9edae2\"},\"orderDirection\":\"desc\",\"otherBucket\":true,\"missingBucket\":false,\"parentFormat\":{\"id\":\"terms\"},\"include\":[],\"exclude\":[],\"includeIsRegex\":false,\"excludeIsRegex\":false}}},\"columnOrder\":[\"74672a00-f2b6-4dc8-ba6f-419057c2aca1\",\"4182bb63-1438-4770-ae34-ad3d2e9edae2\"],\"incompleteColumns\":{},\"sampling\":1}}},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"enhancements\":{}}},{\"type\":\"lens\",\"gridData\":{\"x\":24,\"y\":0,\"w\":24,\"h\":15,\"i\":\"1459b9b1-8247-49e4-816e-c3aa406888d0\"},\"panelIndex\":\"1459b9b1-8247-49e4-816e-c3aa406888d0\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"description\":\"\",\"visualizationType\":\"lnsPie\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"f2e1f66d-b627-4ce3-9ec0-2112bf6088f9\",\"name\":\"indexpattern-datasource-layer-ebe399aa-97a4-424e-b2c8-a1d2c9314863\"}],\"state\":{\"visualization\":{\"shape\":\"pie\",\"layers\":[{\"layerId\":\"ebe399aa-97a4-424e-b2c8-a1d2c9314863\",\"primaryGroups\":[\"440dc3d3-6190-4e4b-acf7-75fdc88c2978\",\"428c0be8-9737-471d-b62d-949a7a3849c6\"],\"metrics\":[\"79fa5e12-2b17-4376-aa88-b5c012c82148\"],\"numberDisplay\":\"percent\",\"categoryDisplay\":\"default\",\"legendDisplay\":\"default\",\"nestedLegend\":false,\"layerType\":\"data\",\"collapseFns\":{\"440dc3d3-6190-4e4b-acf7-75fdc88c2978\":\"sum\"}}]},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"ebe399aa-97a4-424e-b2c8-a1d2c9314863\":{\"columns\":{\"440dc3d3-6190-4e4b-acf7-75fdc88c2978\":{\"label\":\"RequestMethods\",\"dataType\":\"string\",\"operationType\":\"terms\",\"scale\":\"ordinal\",\"sourceField\":\"request_method.keyword\",\"isBucketed\":true,\"params\":{\"size\":100,\"orderBy\":{\"type\":\"column\",\"columnId\":\"79fa5e12-2b17-4376-aa88-b5c012c82148\"},\"orderDirection\":\"desc\",\"otherBucket\":true,\"missingBucket\":false,\"parentFormat\":{\"id\":\"terms\"},\"include\":[],\"exclude\":[],\"includeIsRegex\":false,\"excludeIsRegex\":false},\"customLabel\":true},\"428c0be8-9737-471d-b62d-949a7a3849c6\":{\"label\":\"Top 10 values of request_method.keyword\",\"dataType\":\"string\",\"operationType\":\"terms\",\"scale\":\"ordinal\",\"sourceField\":\"request_method.keyword\",\"isBucketed\":true,\"params\":{\"size\":10,\"orderBy\":{\"type\":\"column\",\"columnId\":\"79fa5e12-2b17-4376-aa88-b5c012c82148\"},\"orderDirection\":\"desc\",\"otherBucket\":true,\"missingBucket\":false,\"parentFormat\":{\"id\":\"terms\"},\"include\":[],\"exclude\":[],\"includeIsRegex\":false,\"excludeIsRegex\":false}},\"79fa5e12-2b17-4376-aa88-b5c012c82148\":{\"label\":\"Count of records\",\"dataType\":\"number\",\"operationType\":\"count\",\"isBucketed\":false,\"scale\":\"ratio\",\"sourceField\":\"___records___\",\"params\":{\"emptyAsNull\":true}}},\"columnOrder\":[\"440dc3d3-6190-4e4b-acf7-75fdc88c2978\",\"428c0be8-9737-471d-b62d-949a7a3849c6\",\"79fa5e12-2b17-4376-aa88-b5c012c82148\"],\"sampling\":1,\"ignoreGlobalFilters\":false,\"incompleteColumns\":{},\"indexPatternId\":\"f2e1f66d-b627-4ce3-9ec0-2112bf6088f9\"}},\"currentIndexPatternId\":\"f2e1f66d-b627-4ce3-9ec0-2112bf6088f9\"},\"indexpattern\":{\"layers\":{}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"hidePanelTitles\":false,\"enhancements\":{}},\"title\":\"Request Methods\"}]","timeRestore":false,"title":"Foodist","version":1},"coreMigrationVersion":"8.8.0","created_at":"2024-02-05T19:22:34.876Z","id":"ea6723c0-c45b-11ee-80bf-d98c16433297","managed":false,"references":[{"id":"f2e1f66d-b627-4ce3-9ec0-2112bf6088f9","name":"071ef051-0dba-4044-9dd7-7e9010fdea11:indexpattern-datasource-layer-345cafcc-50d0-4474-8a5b-8b9224396e8e","type":"index-pattern"},{"id":"f2e1f66d-b627-4ce3-9ec0-2112bf6088f9","name":"1459b9b1-8247-49e4-816e-c3aa406888d0:indexpattern-datasource-layer-ebe399aa-97a4-424e-b2c8-a1d2c9314863","type":"index-pattern"}],"type":"dashboard","typeMigrationVersion":"8.9.0","updated_at":"2024-02-05T19:22:34.876Z","version":"WzM0LDRd"}
+    {"excludedObjects":[],"excludedObjectsCount":0,"exportedCount":2,"missingRefCount":0,"missingReferences":[]}
+
+
+ 

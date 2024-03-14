@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  db:
+    image: foodistdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data 
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_ENV: test
+    networks:
+      - be-network
+
+  foodist-app:
+    image: foodist
+    depends_on:
+      - db
+    command: sh -c "sleep 5 && python app.py"
+    restart: on-failure
+    networks:
+      - be-network
+      - fe-network
+
+  nginx:
+    image: foodistnginx
+    depends_on:
+      - foodist-app
+    ports:
+      - "80:80"
+    networks:
+      - fe-network
+      - jenkins_test_my_network
+
+
+
+volumes:
+  postgres_data: 
+
+networks:
+  be-network:
+  fe-network:
+  jenkins_test_my_network:
+    external:
+      name: jenkins_my_network

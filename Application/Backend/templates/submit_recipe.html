@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Recipe</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Submit Recipe</h1>
+
+        <!-- Recipe Submission Form -->
+        <form action="/recipes/submit" method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="dish_name">Dish Name</label>
+                <input type="text" name="dish_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="ingredients">Ingredients</label>
+                <textarea name="ingredients" class="form-control" required></textarea>
+                <small class="form-text text-muted">Enter ingredients separated by commas (e.g., ingredient1, ingredient2, ...)</small>
+            </div>
+            <div class="form-group">
+                <label for="cuisine">Cuisine</label>
+                <input type="text" name="cuisine" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="instructions">Instructions</label>
+                <textarea name="instructions" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="author_name">Author Name</label>
+                <input type="text" name="author_name" class="form-control" value="{{ session['username'] }}" required readonly>
+            </div>
+            <!-- <div class="form-group">
+                <label for="photos">Photos (Separate URLs by commas)</label>
+                <input type="text" name="photos" class="form-control" required>
+                <small class="form-text text-muted">Enter photo URLs separated by commas (e.g., url1, url2, ...)</small>
+            </div> -->
+            <div class="form-group">
+                <label for="dish_type">Dish Type</label>
+                <input type="text" name="dish_type" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="cook_time">Cook Time (minutes)</label>
+                <input type="number" name="cook_time" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="is_vegan">Is Vegan</label>
+                <select name="is_vegan" class="form-control" required>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="occasions">Occasions</label>
+                <input type="text" name="occasions" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Recipe</button>
+        </form>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

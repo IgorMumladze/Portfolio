@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Flask App - Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile-button.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="content-container">
+        <!-- Profile Picture and Info -->
+        <div class="profile-info">
+            <div class="big-profile-circle">
+                <!-- Profile picture (replace with user's profile picture) -->
+                <img src="{{ url_for('static', filename='images/grey.png') }}" alt="Profile Picture">
+            </div>
+            <h2>{{ user.firstname }} {{ user.lastname }}</h2>
+            <p>Web Developer | Food Enthusiast</p>
+            <!-- Add more user information here -->
+        </div>
+        <!-- Profile Actions and Posts -->
+        <!-- <div class="profile-actions">
+            <button class="btn btn-primary">Add Friend</button>
+            <button class="btn btn-secondary">Message</button>
+            - Add more profile actions as needed -->
+        </div>
+    </div>
+    <section class="main-content">
+        <!-- User's posts and activities can be displayed here -->
+        <div class="user-posts">
+            <h2>Recent Posts</h2>
+            <!-- Example post -->
+            <div class="post">
+                <div class="post-header">
+                    <img src="{{ url_for('static', filename='images/grey.png') }}" alt="User Profile Picture">
+                    <div class="post-header-info">
+                        <h3>{{ user.firstname }} {{ user.lastname }}</h3>
+                        <p>Web Developer</p>
+                    </div>
+                </div>
+                <img src="{{ url_for('static', filename='images/post-image.jpg') }}" alt="Post Image">
+                <p>This is a sample post. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <!-- Add more post details as needed -->
+                <div class="post-actions">
+                    <button class="btn btn-like">Like</button>
+                    <button class="btn btn-comment">Comment</button>
+                    <button class="btn btn-share">Share</button>
+                </div>
+            </div>
+            <!-- Add more posts here -->
+        </div>
+    </section>
+    {% include 'footer.html' %}
+</body>
+</html>

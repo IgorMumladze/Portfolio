@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Foodist - Share and Discover Recipes</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+    <!-- Add a custom CSS class for the profile picture button -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile-button.css') }}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <main class="content-container">
+
+        <section class="section">
+            <h2>Connect with Food Enthusiasts</h2>
+            <p class="section-paragraph">Foodist is more than just a recipe-sharing platform; it's a community. Follow your favorite chefs, save your preferred recipes, and leave comments to engage with other foodies. Share tips, tricks, and culinary insights with like-minded individuals.</p>
+        </section>
+
+        <section class="section">
+            <h2>Explore Recipes</h2>
+            <p class="section-paragraph">Browse through thousands of recipes shared by our users. Whether you're looking for a quick snack or a gourmet meal, you'll find it all here. Use our intuitive search and filter tools to find exactly what you're craving.</p>
+        </section>
+
+        <section class="section">
+            <h2>Share Your Creations</h2>
+            <p class="section-paragraph">Got a recipe you're proud of? Share it with the world on Foodist! Upload your recipe with easy-to-follow steps, and add photos to show off your culinary masterpiece. Join our community and inspire others with your cooking.</p>
+        </section>
+    </main>
+
+    <!-- Add any other content sections you might have here -->
+
+</body>
+</html>

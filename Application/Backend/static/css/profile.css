@@ -1,0 +1,93 @@
+/* Add custom styles for the profile page */
+body {
+    background-color: #f0f2f5;
+}
+
+.content-container {
+    display: grid;
+    justify-content: center;
+    padding: 20px;
+}
+
+.profile-info {
+    width: 600px; /* Set a maximum width if desired */
+    margin: 0 auto; /* Center the element horizontally */
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: grid;
+}
+
+.big-profile-circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: inline-grid;
+}
+
+.big-profile-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-actions {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.user-posts {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.post {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post-header-info {
+    flex: 1;
+}
+
+.post-actions {
+    margin-top: 10px;
+}
+
+.btn-like, .btn-comment, .btn-share {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* Add more custom styles as needed */

@@ -1,0 +1,6 @@
+FROM postgres
+
+# Copy the initialization script to the container
+COPY ./DB/init.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 5432

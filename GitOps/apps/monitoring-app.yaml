@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gp-application
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - repoURL: git@github.com:Efiop97/FoodistGitOps.git
+      targetRevision: HEAD
+      path: "apps/kps"   
+      helm:
+        valueFiles:
+          - "$mycharts/apps/monitoring-values.yaml"
+    - repoURL: git@github.com:Efiop97/FoodistGitOps.git
+      targetRevision: HEAD
+      ref: mycharts
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gp
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated:
+      selfHeal: true
+      prune: true

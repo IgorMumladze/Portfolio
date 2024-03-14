@@ -1,0 +1,148 @@
+/* Define a custom font */
+@font-face {
+    font-family: "EvilEmpire";
+    src: url(../fonts/Evil\ Empire.otf);
+}
+
+/* Make some elements not selectable */
+.not-selectable {
+    user-select: none;
+}
+
+/* Reset default margin and padding for various elements */
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Basic styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E4E4D0;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+
+header {
+    background-color: #004225;
+    color: #fff;
+    padding: 12px 0;
+    display: grid;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    grid-template-columns: 100px 1fr 100px;
+}
+
+.container {
+    margin: 0 auto;
+    padding-left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+h1 {
+    font-family: "EvilEmpire", sans-serif;
+    font-size: 50px;
+    text-align: left;
+    color: #435334;
+    margin-left: 10px;
+    position: absolute;
+    /* padding-top: 20px; */
+
+}
+
+nav {
+    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    grid-area: 1/2/2/3;
+
+}
+
+ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 1046px;
+
+}
+
+li {
+
+    display: inline;
+    margin-right: 20px;
+}
+
+li a {
+    text-decoration: none;
+    color: #CEDEBD;
+    font-weight: bold;
+}
+
+/* Rest of your CSS */
+
+/* Main content styles */
+.main-content {
+    padding: 20px 0;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #E4E4D0;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Add more styles as needed */
+/* Other styles */
+
+/* Main content container */
+.content-container {
+    max-width: 1500px; /* Adjust the max-width as needed for a single column layout */
+    margin: 40px auto; /* Increase margin-top for spacing, center the container */
+    padding: 20px;
+    display: block; /* Use block instead of flex for a single column */
+    text-align: center;
+}
+
+/* Main heading style */
+.main-heading {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #004225;
+    width: 100%;
+}
+
+/* Section styles */
+.section {
+    margin-bottom: 10rem; /* Add space between sections */
+}
+
+/* Headings within sections */
+.section h2 {
+    text-align: left;
+    font-size: 1.5rem; /* Adjust size as needed */
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Paragraphs within sections */
+.section p {
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.6; /* For better readability */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .content-container {
+        padding: 20px;
+    }
+}

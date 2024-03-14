@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foodist-dpl
+  labels:
+    app: foodist
+spec:
+  replicas: {{ .Values.foodist.replicaCount | default 1 }}
+  selector: 
+    matchLabels:
+      app: foodist
+  template:
+    metadata:
+      labels:
+        app: foodist
+    spec:
+      containers:
+        - name: foodist
+          image: {{ .Values.foodist.image }}
+          ports:
+            - containerPort: {{ .Values.foodist.config.port | default 5000 }}
+          envFrom:
+            - configMapRef:
+                name: foodist-conf
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: postgres-user-password
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "250m"

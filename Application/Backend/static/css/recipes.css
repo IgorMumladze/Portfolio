@@ -1,0 +1,136 @@
+.recipe-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+    gap: 40px 24px;
+    grid-auto-flow: row dense;
+    margin-top: 2.5rem;
+    margin-bottom: 80px;
+    position: relative;
+}
+
+.recipe-card {
+    background-color: #CEDEBD;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(43, 255, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+    padding: 10px;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+}
+
+.recipe-card-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px 10px 0 0;
+}
+
+.recipe-card-content {
+    padding: 10px;
+}
+
+.recipe-card-title {
+    font-size: 20px; /* Slightly reduced font size */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.recipe-card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Align the footer to the bottom */
+    background-color: #03690533;
+    padding: 10px; /* Increased padding */
+}
+
+/* Style for View Recipe Button */
+.recipe-card-button {
+    background-color: #004225;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.2s ease-in-out;
+    display: block;
+    margin: 10px auto; /* Center the button */
+    width: 150px; /* Adjust button width as needed */
+    text-align: center;
+}
+
+.recipe-card-button:hover {
+    background-color: #007438;
+}
+
+.btn-primary {
+    background-color: #004225;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.2s ease-in-out;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: #007438;
+}
+
+
+
+/* Style for the custom search form */
+.custom-search-form {
+    display: grid;
+    grid-template-columns: 1fr 0.2fr;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Adjust the max-width as needed */
+    margin: 0 auto;
+    margin-top: 20px; /* Add top margin if needed */
+}
+
+/* Style for the search input */
+.custom-search-form .form-control {
+    width: 100%;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    padding: 10px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+/* Style for the search button */
+.custom-search-form .btn-outline-secondary {
+    background-color: #004225;
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.custom-search-form .btn-outline-secondary:hover {
+    background-color: #007438;
+}
+
+.custom-search-form .btn-submit-recipe {
+    background-color: #004225;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.custom-search-form .btn-submit-recipe {
+    margin-left: 10px;
+}

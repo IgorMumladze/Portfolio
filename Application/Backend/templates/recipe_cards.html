@@ -1,0 +1,22 @@
+<div class="recipe-cards-container">
+
+    {% for recipe in recipes %}
+    <div class="recipe-card">
+        <!-- Card Image (you can use a recipe photo here) -->
+        <!-- <img src="{{ recipe.photos }}" class="recipe-card-image" alt="{{ recipe.dish_name }}"> -->
+        <div class="recipe-card-content">
+            <h5 class="recipe-card-title">{{ recipe.dish_name }}</h5>
+            <p><strong>Cuisine:</strong> {{ recipe.cuisine }}</p>
+            <p><strong>User:</strong> {{ recipe.user_name }}</p>
+            <p><strong>Dish Type:</strong> {{ recipe.dish_type }}</p>
+            <p><strong>Cook Time:</strong> {{ recipe.cook_time }}</p>
+            <p><strong>Occasions:</strong> {{ recipe.occasions }}</p>
+            <p><strong>Vegan:</strong> {% if recipe.is_vegan %} Yes {% else %} No {% endif %}</p>
+        </div>
+        <!-- Card Footer with Link to Full Recipe -->
+        <div class="recipe-card-footer">
+            <a href="{{ url_for('full_recipe', recipe_id=recipe.id) }}" class="btn btn-primary">View Recipe</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: efk-stack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:Efiop97/FoodistGitOps.git
+    path: "apps/efk-stack"
+    targetRevision: HEAD
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: efk
+  syncPolicy:
+    automated:
+      prune: true 
+      selfHeal: true 
+    syncOptions:
+      - CreateNamespace=true  

@@ -1,0 +1,19 @@
+# ArgoCD Config
+configs:
+  params:
+    server.insecure: true
+
+# Server Config
+server:
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt"
+    ingressClassName: nginx
+    hosts:
+      - argo.foodists.net
+    tls:
+      - hosts:
+          - argo.foodists.net
+        secretName: argo.foodists.net-tls
+    https: true

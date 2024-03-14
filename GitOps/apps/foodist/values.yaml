@@ -1,0 +1,46 @@
+foodist:
+  image: 644435390668.dkr.ecr.us-east-1.amazonaws.com/igor-foodist:1.0.21
+  replicaCount: 3
+  config:
+    port: '5000'
+    logLevel: DEBUG
+  service:
+    type: ClusterIP
+    port: '80'
+  ingress:
+    enabled: true
+    hostname: foodists.net
+    ingressClassName: nginx
+    tls:
+      enabled: true
+      staging: false
+postgresql:
+  auth:
+    username: igor
+    existingSecret: postgresql-secret
+    secretKeys:
+      adminPasswordKey: postgres-admin-password
+      userPasswordKey: postgres-user-password
+      replicationPasswordKey: postgres-repl-password
+    database: foodist
+  architecture: standalone
+  primary:
+    initdb:
+      scriptsConfigMap: init-script-configmap
+    name: primary
+    resources:
+      limits: {}
+      requests:
+        memory: 256Mi
+        cpu: 250m
+    persistence:
+      enabled: true
+      size: 8Gi
+  service:
+    type: ClusterIP
+    ports:
+      postgresql: 5432
+volumes:
+  - name: init-script-volume
+    configMap:
+      name: init-script-configmap
